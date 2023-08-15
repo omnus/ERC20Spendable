@@ -47,7 +47,9 @@ abstract contract ERC20SpendableReceiver is IERC20SpendableReceiver {
    *
    */
   modifier onlySpendable(address spendable_) {
-    require(spendable_ == spendableToken, "Call from non-spendable tokent");
+    if (spendable_ != spendableToken) {
+      revert CallMustBeFromSpendableToken();
+    }
     _;
   }
 

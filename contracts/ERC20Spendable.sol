@@ -20,6 +20,7 @@
 
 pragma solidity 0.8.19;
 
+import {IERC20Spendable} from "./IERC20Spendable.sol";
 import {IERC20SpendableReceiver} from "./IERC20SpendableReceiver.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -28,7 +29,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * @dev ERC20Spendable is an extension of ERC20:
  *
  */
-abstract contract ERC20Spendable {
+abstract contract ERC20Spendable is IERC20Spendable {
   /**
    *
    * @notice {spend} allows the transfer of the owners token to the receiver, a call on the receiver, and
@@ -61,7 +62,9 @@ abstract contract ERC20Spendable {
       receiver_
     ).receiveSpendableERC20(msg.sender, spent_, arguments_);
 
-    require(success, "Token Spend failed");
+    if (!success) {
+      revert TokenSpendFailed();
+    }
 
     return (returnValues);
   }

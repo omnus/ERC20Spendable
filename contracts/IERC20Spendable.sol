@@ -22,7 +22,9 @@
 
 pragma solidity 0.8.19;
 
-interface IERC20Spendable {
+import {IERC20SpendableErrors} from "./IERC20SpendableErrors.sol";
+
+interface IERC20Spendable is IERC20SpendableErrors {
   /**
    *
    * @dev Spend allows the transfer of the owner's token to the receiver, a call on the receiver, and

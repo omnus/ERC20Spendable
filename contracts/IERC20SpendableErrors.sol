@@ -6,7 +6,7 @@
 
 /**
  *
- * @title IERC20SpendableReceiver.sol
+ * @title IERC20SpendableErrors.sol
  *
  * @author omnus
  * https://omn.us
@@ -16,23 +16,16 @@
  * and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
  * ERC677 and specifically scoped interaction rather than the general hooks of ERC777.
  *
- * Interface Definition ERC20SpendableReceiver
+ * Interface for custom error definitions
  *
  */
 
 pragma solidity 0.8.19;
 
-import {IERC20SpendableErrors} from "./IERC20SpendableErrors.sol";
+interface IERC20SpendableErrors {
+  /// @dev The token spend operation returned success == false.
+  error TokenSpendFailed();
 
-interface IERC20SpendableReceiver is IERC20SpendableErrors {
-  /**
-   *
-   * @dev function to be called on receive. Must be overriden, including the addition of a fee check, if required:
-   *
-   */
-  function receiveSpendableERC20(
-    address spender_,
-    uint256 spent_,
-    bytes memory arguments_
-  ) external returns (bool success_, bytes memory returnArguments_);
+  /// @dev The call to this method can only be from a designated spendable token.
+  error CallMustBeFromSpendableToken();
 }
