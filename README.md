@@ -68,7 +68,7 @@ Overloaded method - call this to specify a bytes argument.
 ### \_handleReceipt
 
 ```solidity
-function _handleReceipt(bytes arguments_) internal virtual
+function _handleReceipt(bytes returnedArguments_) internal virtual
 ```
 
 {\_handleReceipt} Internal function called on completion of a call to {onERC20SpendableReceived}
@@ -79,9 +79,9 @@ When making a token {ERC20Spendable} if you wish to process receipts you need to
 
 #### Parameters
 
-| Name        | Type  | Description                                                                                                               |
-| ----------- | ----- | ------------------------------------------------------------------------------------------------------------------------- |
-| arguments\_ | bytes | Bytes argument to returned from the call. See {mock} contracts for details on encoding and decoding arguments from bytes. |
+| Name                | Type  | Description                                                                                                               |
+| ------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------- |
+| returnedArguments\_ | bytes | Bytes argument to returned from the call. See {mock} contracts for details on encoding and decoding arguments from bytes. |
 
 ### supportsInterface
 
@@ -205,6 +205,14 @@ error ERC20SpendableInvalidReveiver(address receiver)
 ```
 
 _Error {ERC20SpendableInvalidReveiver} The called contract does not support ERC20Spendable._
+
+### SpendReceipt
+
+```solidity
+event SpendReceipt(address spender, address receiver, uint256 amount, bytes sentArguments, bytes returnedArguments)
+```
+
+_Event {SpendReceipt} issued on successful return from the {ERC20SpendableReceiver} call._
 
 ### spend
 
@@ -345,7 +353,7 @@ constructor(address initialHolder_, uint256 intialBalance_) public
 ### \_handleReceipt
 
 ```solidity
-function _handleReceipt(bytes arguments_) internal
+function _handleReceipt(bytes returnedArguments_) internal
 ```
 
 _function to be called on receive._

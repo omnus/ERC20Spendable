@@ -26,6 +26,15 @@ interface IERC20Spendable {
   /// @dev Error {ERC20SpendableInvalidReveiver} The called contract does not support ERC20Spendable.
   error ERC20SpendableInvalidReveiver(address receiver);
 
+  /// @dev Event {SpendReceipt} issued on successful return from the {ERC20SpendableReceiver} call.
+  event SpendReceipt(
+    address spender,
+    address receiver,
+    uint256 amount,
+    bytes sentArguments,
+    bytes returnedArguments
+  );
+
   /**
    * @dev {spend} Allows the transfer of the owners token to the receiver, a call on the receiver,
    * and then the return of information from the receiver back up the call stack.

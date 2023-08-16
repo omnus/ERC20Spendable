@@ -19,13 +19,16 @@ contract MockSpendableERC20ReturnedArgs is ERC20, ERC20Spendable {
    * @dev function to be called on receive.
    *
    */
-  function _handleReceipt(bytes memory arguments_) internal override {
+  function _handleReceipt(bytes memory returnedArguments_) internal override {
     address spender;
     uint256 spent;
     bool flag;
 
-    if (arguments_.length != 0) {
-      (spender, spent, flag) = abi.decode(arguments_, (address, uint256, bool));
+    if (returnedArguments_.length != 0) {
+      (spender, spent, flag) = abi.decode(
+        returnedArguments_,
+        (address, uint256, bool)
+      );
     }
 
     emit Receipt(spender, spent, flag);

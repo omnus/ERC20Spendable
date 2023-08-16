@@ -88,15 +88,22 @@ abstract contract ERC20Spendable is Context, ERC20, IERC20Spendable {
           spent_,
           arguments_
         )
-      returns (bytes4 retval, bytes memory returnValues) {
+      returns (bytes4 retval, bytes memory returnedArguments) {
         if (
           retval != IERC20SpendableReceiver.onERC20SpendableReceived.selector
         ) {
           revert ERC20SpendableInvalidReveiver(receiver_);
         }
-        // Handle returned values. Specify an override {_handleReceipt} method in your ERC20 contract if you
-        // wish to handle returned arguments.
-        _handleReceipt(returnValues);
+        emit SpendReceipt(
+          _msgSender(),
+          receiver_,
+          spent_,
+          arguments_,
+          returnedArguments
+        );
+        /// @dev Handle returned values. Specify an override {_handleReceipt} method in your ERC20 contract if
+        /// you wish to handle returned arguments.
+        _handleReceipt(returnedArguments);
       } catch (bytes memory reason) {
         if (reason.length == 0) {
           revert ERC20SpendableInvalidReveiver(receiver_);
@@ -117,10 +124,10 @@ abstract contract ERC20Spendable is Context, ERC20, IERC20Spendable {
    * When making a token {ERC20Spendable} if you wish to process receipts you need to override
    * {_handleReceipt} in your contract. For an example, see {mock} contract {MockSpendableERC20ReturnedArgs}.
    *
-   * @param arguments_ Bytes argument to returned from the call. See {mock} contracts for details on encoding
-   * and decoding arguments from bytes.
+   * @param returnedArguments_ Bytes argument to returned from the call. See {mock} contracts for details on
+   * encoding and decoding arguments from bytes.
    */
-  function _handleReceipt(bytes memory arguments_) internal virtual {}
+  function _handleReceipt(bytes memory returnedArguments_) internal virtual {}
 
   /**
    * @dev See {IERC165-supportsInterface}. This can be used to determine if an ERC20 is ERC20Spendable. For
