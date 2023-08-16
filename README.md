@@ -1,19 +1,32 @@
 # ERC20Spendable
 
-ERC20Spendable repository
+_ERC20Spendable_ allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
+can trigger an action on another contract at the same time as being transfered. Similar to ERC677
+and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
+ERC677 and specifically scoped interaction rather than the general hooks of ERC777.
+
+## Implementation
+
+To implement ERC20Spendable in an ERC20 import ERC20Spendable. To process receipts override internal
+function \_handleReceipt.
+
+To implement ERC20Spendable calls in a receiver import ERC20Receiver and override internal function
+\_handleSpend.
+
+See more guidance below.
 
 # Solidity API
 
 ## ERC20Spendable
 
-\_Implementation of {ERC20Spendable}.
+Implementation of {ERC20Spendable}.
 
 {ERC20Spendable} allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
 can trigger an action on another contract at the same time as being transfered. Similar to ERC677
 and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
 ERC677 and specifically scoped interaction rather than the general hooks of ERC777.
 
-For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable_
+For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable
 
 ### spend
 
@@ -21,10 +34,10 @@ For more detailed notes please see our guide https://omn.us/how-to-implement-erc
 function spend(address receiver_, uint256 spent_) public virtual
 ```
 
-\_{spend} Allows the transfer of the owners token to the receiver, a call on the receiver,
+{spend} Allows the transfer of the owners token to the receiver, a call on the receiver,
 and then the return of information from the receiver back up the call stack.
 
-Overloaded method - call this if you are not specifying any arguments.\_
+Overloaded method - call this if you are not specifying any arguments.
 
 #### Parameters
 
@@ -39,10 +52,10 @@ Overloaded method - call this if you are not specifying any arguments.\_
 function spend(address receiver_, uint256 spent_, bytes arguments_) public virtual
 ```
 
-\_{spend} Allows the transfer of the owners token to the receiver, a call on the receiver, and
+{spend} Allows the transfer of the owners token to the receiver, a call on the receiver, and
 the return of information from the receiver back up the call stack.
 
-Overloaded method - call this to specify a bytes argument.\_
+Overloaded method - call this to specify a bytes argument.
 
 #### Parameters
 
@@ -58,11 +71,11 @@ Overloaded method - call this to specify a bytes argument.\_
 function _handleReceipt(bytes arguments_) internal virtual
 ```
 
-\_{\_handleReceipt} Internal function called on completion of a call to {onERC20SpendableReceived}
+{\_handleReceipt} Internal function called on completion of a call to {onERC20SpendableReceived}
 on the {ERC20SpendableReceiver}.
 
 When making a token {ERC20Spendable} if you wish to process receipts you need to override
-{_handleReceipt} in your contract. For an example, see {mock} contract {MockSpendableERC20ReturnedArgs}._
+{\_handleReceipt} in your contract. For an example, see {mock} contract {MockSpendableERC20ReturnedArgs}.
 
 #### Parameters
 
@@ -76,9 +89,9 @@ When making a token {ERC20Spendable} if you wish to process receipts you need to
 function supportsInterface(bytes4 interfaceId_) public view virtual returns (bool)
 ```
 
-_See {IERC165-supportsInterface}. This can be used to determine if an ERC20 is ERC20Spendable. For
+See {IERC165-supportsInterface}. This can be used to determine if an ERC20 is ERC20Spendable. For
 example, a DEX may check this value, and make use of a single {spend} transaction (rather than the current
-model of [approve -> pull]) if the ERC20Spendable interface is supported._
+model of [approve -> pull]) if the ERC20Spendable interface is supported.
 
 #### Parameters
 
@@ -88,14 +101,14 @@ model of [approve -> pull]) if the ERC20Spendable interface is supported._
 
 ## ERC20SpendableReceiver
 
-\_Implementation of {ERC20Spendable}.
+Implementation of {ERC20Spendable}.
 
 {ERC20Spendable} allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
 can trigger an action on another contract at the same time as being transfered. Similar to ERC677
 and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
 ERC677 and specifically scoped interaction rather than the general hooks of ERC777.
 
-For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable_
+For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable
 
 ### spendableToken
 
@@ -139,13 +152,13 @@ _The constructor must be passed the token contract for the payable ERC20._
 function onERC20SpendableReceived(address spender_, uint256 spent_, bytes arguments_) external virtual returns (bytes4 retval_, bytes returnArguments_)
 ```
 
-\_{onERC20SpendableReceived} External function called by ERC20SpendableTokens. This
+{onERC20SpendableReceived} External function called by ERC20SpendableTokens. This
 validates that the token is valid and then calls the internal {\_handleSpend} method.
 You must overried {\_handleSpend} in your contract to perform processing you wish to occur
 on token spend.
 
 This method will pass back the valid bytes4 selector and any bytes argument passed from
-{_handleSpend}._
+{\_handleSpend}.
 
 #### Parameters
 
@@ -161,10 +174,10 @@ This method will pass back the valid bytes4 selector and any bytes argument pass
 function _handleSpend(address spender_, uint256 spent_, bytes arguments_) internal virtual returns (bytes returnArguments_)
 ```
 
-\_{\_handleSpend} Internal function called by {onERC20SpendableReceived}.
+{\_handleSpend} Internal function called by {onERC20SpendableReceived}.
 
-You must overried {_handleSpend} in your contract to perform processing you wish to occur
-on token spend._
+You must overried {\_handleSpend} in your contract to perform processing you wish to occur
+on token spend.
 
 #### Parameters
 
@@ -176,14 +189,14 @@ on token spend._
 
 ## IERC20Spendable
 
-\_Implementation of {IERC20Spendable} interface.
+Implementation of {IERC20Spendable} interface.
 
 {ERC20Spendable} allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
 can trigger an action on another contract at the same time as being transfered. Similar to ERC677
 and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
 ERC677 and specifically scoped interaction rather than the general hooks of ERC777.
 
-For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable_
+For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable
 
 ### ERC20SpendableInvalidReveiver
 
@@ -199,10 +212,10 @@ _Error {ERC20SpendableInvalidReveiver} The called contract does not support ERC2
 function spend(address receiver_, uint256 spent_) external
 ```
 
-\_{spend} Allows the transfer of the owners token to the receiver, a call on the receiver,
+{spend} Allows the transfer of the owners token to the receiver, a call on the receiver,
 and then the return of information from the receiver back up the call stack.
 
-Overloaded method - call this if you are not specifying any arguments.\_
+Overloaded method - call this if you are not specifying any arguments.
 
 #### Parameters
 
@@ -217,10 +230,10 @@ Overloaded method - call this if you are not specifying any arguments.\_
 function spend(address receiver_, uint256 spent_, bytes arguments_) external
 ```
 
-\_{spend} Allows the transfer of the owners token to the receiver, a call on the receiver, and
+{spend} Allows the transfer of the owners token to the receiver, a call on the receiver, and
 the return of information from the receiver back up the call stack.
 
-Overloaded method - call this to specify a bytes argument.\_
+Overloaded method - call this to specify a bytes argument.
 
 #### Parameters
 
@@ -232,14 +245,14 @@ Overloaded method - call this to specify a bytes argument.\_
 
 ## IERC20SpendableReceiver
 
-\_Implementation of {IERC20SpendableReceiver} interface.
+Implementation of {IERC20SpendableReceiver} interface.
 
 {ERC20Spendable} allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
 can trigger an action on another contract at the same time as being transfered. Similar to ERC677
 and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
 ERC677 and specifically scoped interaction rather than the general hooks of ERC777.
 
-For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable_
+For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable
 
 ### CallMustBeFromSpendableToken
 
@@ -255,13 +268,13 @@ error CallMustBeFromSpendableToken()
 function onERC20SpendableReceived(address spender_, uint256 spent_, bytes arguments_) external returns (bytes4 retval_, bytes returnArguments_)
 ```
 
-\_{onERC20SpendableReceived} External function called by ERC20SpendableTokens. This
+{onERC20SpendableReceived} External function called by ERC20SpendableTokens. This
 validates that the token is valid and then calls the internal {\_handleSpend} method.
 You must overried {\_handleSpend} in your contract to perform processing you wish to occur
 on token spend.
 
 This method will pass back the valid bytes4 selector and any bytes argument passed from
-{_handleSpend}._
+{\_handleSpend}.
 
 #### Parameters
 
@@ -277,6 +290,14 @@ This method will pass back the valid bytes4 selector and any bytes argument pass
 
 ```solidity
 constructor(address initialHolder_, uint256 intialBalance_) public
+```
+
+## MockSpendableERC20NonReceiver
+
+### constructor
+
+```solidity
+constructor() public
 ```
 
 ## MockSpendableERC20Receiver
@@ -328,37 +349,3 @@ function _handleReceipt(bytes arguments_) internal
 ```
 
 _function to be called on receive._
-
-## IERC20SpendableErrors
-
-### CallMustBeFromSpendableToken
-
-```solidity
-error CallMustBeFromSpendableToken()
-```
-
-@dev The call to this method can only be from a designated spendable token.
-
-### ERC20SpendableInvalidReveiver
-
-```solidity
-error ERC20SpendableInvalidReveiver(address receiver)
-```
-
-_The called contract does not support ERC20Spendable._
-
-### TokenSpendFailed
-
-```solidity
-error TokenSpendFailed()
-```
-
-_The token spend operation returned success == false._
-
-## MockSpendableERC20NonReceiver
-
-### constructor
-
-```solidity
-constructor() public
-```

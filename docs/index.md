@@ -275,6 +275,14 @@ This method will pass back the valid bytes4 selector and any bytes argument pass
 constructor(address initialHolder_, uint256 intialBalance_) public
 ```
 
+## MockSpendableERC20NonReceiver
+
+### constructor
+
+```solidity
+constructor() public
+```
+
 ## MockSpendableERC20Receiver
 
 ### AmountStaked
@@ -324,38 +332,4 @@ function _handleReceipt(bytes arguments_) internal
 ```
 
 _function to be called on receive._
-
-## IERC20SpendableErrors
-
-### CallMustBeFromSpendableToken
-
-```solidity
-error CallMustBeFromSpendableToken()
-```
-
-@dev The call to this method can only be from a designated spendable token.
-
-### ERC20SpendableInvalidReveiver
-
-```solidity
-error ERC20SpendableInvalidReveiver(address receiver)
-```
-
-_The called contract does not support ERC20Spendable._
-
-### TokenSpendFailed
-
-```solidity
-error TokenSpendFailed()
-```
-
-_The token spend operation returned success == false._
-
-## MockSpendableERC20NonReceiver
-
-### constructor
-
-```solidity
-constructor() public
-```
 
