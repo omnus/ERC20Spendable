@@ -6,8 +6,6 @@
 
 pragma solidity ^0.8.19;
 
-import {IERC20SpendableErrors} from "./IERC20SpendableErrors.sol";
-
 /**
  * @title IERC20Spendable.sol
  *
@@ -24,7 +22,10 @@ import {IERC20SpendableErrors} from "./IERC20SpendableErrors.sol";
  * For more detailed notes please see our guide https://omn.us/how-to-implement-erc20-spendable
  */
 
-interface IERC20Spendable is IERC20SpendableErrors {
+interface IERC20Spendable {
+  /// @dev Error {ERC20SpendableInvalidReveiver} The called contract does not support ERC20Spendable.
+  error ERC20SpendableInvalidReveiver(address receiver);
+
   /**
    * @dev {spend} Allows the transfer of the owners token to the receiver, a call on the receiver,
    * and then the return of information from the receiver back up the call stack.

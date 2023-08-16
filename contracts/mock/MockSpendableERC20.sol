@@ -8,7 +8,7 @@ contract MockSpendableERC20 is ERC20, ERC20Spendable {
   constructor(
     address initialHolder_,
     uint256 intialBalance_
-  ) ERC20("MyToken", "MTK") {
+  ) ERC20("MockSpendable", "MSPEND") {
     _mint(initialHolder_, intialBalance_);
   }
 }
