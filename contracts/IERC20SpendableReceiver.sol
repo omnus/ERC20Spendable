@@ -20,19 +20,19 @@
  *
  */
 
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import {IERC20SpendableErrors} from "./IERC20SpendableErrors.sol";
 
 interface IERC20SpendableReceiver is IERC20SpendableErrors {
   /**
    *
-   * @dev function to be called on receive. Must be overriden, including the addition of a fee check, if required:
+   * @dev function to be called on receive.
    *
    */
-  function receiveSpendableERC20(
+  function onERC20SpendableReceived(
     address spender_,
     uint256 spent_,
     bytes memory arguments_
-  ) external returns (bool success_, bytes memory returnArguments_);
+  ) external returns (bytes4 retval_, bytes memory returnArguments_);
 }

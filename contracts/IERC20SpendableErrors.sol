@@ -20,12 +20,15 @@
  *
  */
 
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 interface IERC20SpendableErrors {
-  /// @dev The token spend operation returned success == false.
-  error TokenSpendFailed();
-
   /// @dev The call to this method can only be from a designated spendable token.
   error CallMustBeFromSpendableToken();
+
+  /// @dev The called contract does not support ERC20Spendable.
+  error ERC20SpendableInvalidReveiver(address receiver);
+
+  /// @dev The token spend operation returned success == false.
+  error TokenSpendFailed();
 }
