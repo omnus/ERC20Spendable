@@ -9,14 +9,14 @@ pragma solidity 0.8.19;
 import {IERC20SpendableReceiver} from "./IERC20SpendableReceiver.sol";
 
 /**
- * @title ERC20SpendableReceiver.sol
+ * @title ERC-7492 ERC20SpendableReceiver.sol
  *
  * @author omnus
  * https://omn.us
  *
  * @dev Implementation of {ERC20Spendable}.
  *
- * {ERC20Spendable} allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
+ * {ERC-7492 ERC20Spendable} allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
  * can trigger an action on another contract at the same time as being transfered. Similar to ERC677
  * and the hooks in ERC777, but with more of an empasis on interoperability (returned values) than
  * ERC677 and specifically scoped interaction rather than the general hooks of ERC777.

@@ -1,4 +1,4 @@
-# ERC20Spendable
+# ERC20Spendable - ERC-7492
 
 _ERC20Spendable_ allows ERC20s to operate as 'spendable' items, i.e. an ERC20 token that
 can trigger an action on another contract at the same time as being transfered. Similar to ERC677
